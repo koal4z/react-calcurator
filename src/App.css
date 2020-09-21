@@ -14,10 +14,44 @@
   height: 80rem;
   border: 1rem solid #de4463;
   border-radius: 0.2rem;
-  box-shadow: 5px 10px 15px 10px rgba(0,0,0,0.25);
+  box-shadow: 5px 10px 15px 10px rgba(0, 0, 0, 0.25);
 
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   grid-template-rows: repeat(6, 1fr);
+  gap: 0.5rem;
+  padding: 1rem;
+}
 
+.calculator > div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #edc988;
+  font-size: 3rem;
+}
+
+#display {
+  grid-row: 1;
+  grid-column: 1/5;
+}
+
+#equals {
+  grid-row: 5/7;
+  grid-column: 4/5;
+}
+
+#zero {
+  grid-row: 6/7;
+  grid-column: 1/3;
+}
+
+#decimal {
+  grid-row: 6/7;
+  grid-column: 3;
+}
+
+#add {
+  grid-row: 3/5;
+  grid-column: 4;
 }
