@@ -20,7 +20,7 @@
   grid-template-columns: repeat(4, 1fr);
   grid-template-rows: repeat(6, 1fr);
   gap: 0.5rem;
-  padding: 1rem;
+  padding: 0.5rem;
 }
 
 .calculator > div {
@@ -29,16 +29,29 @@
   align-items: center;
   background-color: #edc988;
   font-size: 3rem;
+  cursor: pointer;
+  transition: all 0.1s;
+}
+
+.calculator > div:hover {
+  color: #edc988;
+  background-color: #de4463;
+  outline: 0.1rem solid rgba(233,233,233);
 }
 
 #display {
   grid-row: 1;
   grid-column: 1/5;
+  background-color: rgba(0, 0, 0, 0.8);
 }
 
 #equals {
   grid-row: 5/7;
   grid-column: 4/5;
+}
+
+#clear {
+  background-color: #ed9788;
 }
 
 #zero {
