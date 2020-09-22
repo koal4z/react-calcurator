@@ -33,7 +33,6 @@ function App() {
     }
 
     console.log(arN, arO);
-    //TODO: เลขที่แยกออกมาแล้วทำให้เป็น  Number และ กระทำกับตัวดำเนินการ
     const arNparse = arN.map((str) => parseFloat(str));
 
     let sum = arNparse[0];
@@ -42,13 +41,23 @@ function App() {
     }
 
     console.log(sum);
-    //TODO: คืนผลลัพท์สุดท้ายเป๋น string
     setDisplay(sum.toString());
   };
 
   useEffect(() => {
     if (display.length > 1 && display[0] === '0' && display[1] !== '.') {
       setDisplay(display.slice(1));
+    }
+
+    if (
+      operation.includes(display[display.length - 2]) &&
+      operation.includes(display[display.length - 1])
+    ) {
+      let newStr = display;
+      newStr =
+        newStr.substring(0, newStr.length - 2) +
+        newStr.substring(newStr.length - 1, newStr.length);
+      setDisplay(newStr);
     }
     return;
   }, [display]);
@@ -63,8 +72,7 @@ function App() {
         <div
           id="add"
           onClick={() => {
-            if (operation.indexOf(display[display.length - 1]) === -1)
-              setDisplay(display + '+');
+            setDisplay(display + '+');
           }}
         >
           +
@@ -72,8 +80,7 @@ function App() {
         <div
           id="divide"
           onClick={() => {
-            if (operation.indexOf(display[display.length - 1]) === -1)
-              setDisplay(display + '/');
+            setDisplay(display + '/');
           }}
         >
           /
@@ -81,8 +88,7 @@ function App() {
         <div
           id="multiply"
           onClick={() => {
-            if (operation.indexOf(display[display.length - 1]) === -1)
-              setDisplay(display + 'x');
+            setDisplay(display + 'x');
           }}
         >
           x

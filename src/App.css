@@ -33,10 +33,17 @@
   transition: all 0.1s;
 }
 
+.calculator > #display {
+  justify-content: flex-end;
+  padding-right: 1.5rem;
+  font-size: 5rem;
+}
+
 .calculator > div:hover:not(:first-child) {
   color: #edc988;
   background-color: #de4463;
   outline: 0.1rem solid rgba(233, 233, 233);
+  user-select: none;
 }
 
 #display {
