@@ -4,6 +4,7 @@ import './App.css';
 function App() {
   const operation = ['+', '-', 'x', '/'];
   const [display, setDisplay] = useState('0');
+  const [useDecimal, setUseDecimal] = useState(true);
 
   const handlerCalculated = () => {
     const strGroup = display;
@@ -32,7 +33,6 @@ function App() {
       }
     }
 
-    console.log(arN, arO);
     const arNparse = arN.map((str) => parseFloat(str));
 
     let sum = arNparse[0];
@@ -40,8 +40,10 @@ function App() {
       sum = operationExc(sum, arNparse[i], arO[i - 1]);
     }
 
+    console.log(arN, arO);
     console.log(sum);
     setDisplay(sum.toString());
+    setUseDecimal(true);
   };
 
   useEffect(() => {
@@ -51,28 +53,33 @@ function App() {
 
     if (
       operation.includes(display[display.length - 2]) &&
-      operation.includes(display[display.length - 1])
+      operation.includes(display[display.length - 1]) &&
+      display[display.length - 1] !== '-'
     ) {
-      let newStr = display;
-      newStr =
-        newStr.substring(0, newStr.length - 2) +
-        newStr.substring(newStr.length - 1, newStr.length);
-      setDisplay(newStr);
+      setDisplay(deleteSecondLastStr(display));
     }
+
     return;
-  }, [display]);
+  }, [display, operation]);
 
   return (
     <div className="App">
       <div className="calculator">
         <div id="display">{display}</div>
-        <div id="clear" onClick={() => setDisplay('0')}>
+        <div
+          id="clear"
+          onClick={() => {
+            setDisplay('0');
+            setUseDecimal(true);
+          }}
+        >
           ac
         </div>
         <div
           id="add"
           onClick={() => {
             setDisplay(display + '+');
+            setUseDecimal(true);
           }}
         >
           +
@@ -81,6 +88,7 @@ function App() {
           id="divide"
           onClick={() => {
             setDisplay(display + '/');
+            setUseDecimal(true);
           }}
         >
           /
@@ -89,6 +97,7 @@ function App() {
           id="multiply"
           onClick={() => {
             setDisplay(display + 'x');
+            setUseDecimal(true);
           }}
         >
           x
@@ -97,6 +106,7 @@ function App() {
           id="subtract"
           onClick={() => {
             setDisplay(display + '-');
+            setUseDecimal(true);
           }}
         >
           -
@@ -139,7 +149,10 @@ function App() {
         <div
           id="decimal"
           onClick={() => {
-            setDisplay(display + '.');
+            if (useDecimal) {
+              setDisplay(display + '.');
+              setUseDecimal(false);
+            }
           }}
         >
           .
@@ -171,4 +184,12 @@ const operationExc = (a, b, op) => {
     default:
       throw new Error("can't calculated just fix your code!!");
   }
+};
+
+const deleteSecondLastStr = (text) => {
+  let newStr = text;
+  newStr =
+    newStr.substring(0, newStr.length - 2) +
+    newStr.substring(newStr.length - 1, newStr.length);
+  return newStr;
 };
