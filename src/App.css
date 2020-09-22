@@ -33,10 +33,10 @@
   transition: all 0.1s;
 }
 
-.calculator > div:hover {
+.calculator > div:hover:not(:first-child) {
   color: #edc988;
   background-color: #de4463;
-  outline: 0.1rem solid rgba(233,233,233);
+  outline: 0.1rem solid rgba(233, 233, 233);
 }
 
 #display {
@@ -48,10 +48,13 @@
 #equals {
   grid-row: 5/7;
   grid-column: 4/5;
+  background-color: #00c851;
+  color: #edc988;
 }
 
 #clear {
-  background-color: #ed9788;
+  background-color: #ff4444;
+  color: #edc988;
 }
 
 #zero {

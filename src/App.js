@@ -4,8 +4,50 @@ import './App.css';
 function App() {
   const operation = ['+', '-', 'x', '/'];
   const [display, setDisplay] = useState('0');
+
+  const handlerCalculated = () => {
+    const strGroup = display;
+    const arN = [];
+    const arO = [];
+    let strN = '';
+
+    for (let i = 0; i < strGroup.length; i++) {
+      if (
+        (strGroup[i] === '-' && operation.indexOf(strGroup[i - 1]) !== -1) ||
+        (i === 0 && strGroup[i] === '-')
+      ) {
+        strN += strGroup[i];
+        continue;
+      }
+      if (operation.indexOf(strGroup[i]) !== -1) {
+        arO.push(strGroup[i]);
+        arN.push(strN);
+        strN = '';
+        continue;
+      }
+      strN += strGroup[i];
+
+      if (i === strGroup.length - 1) {
+        arN.push(strN);
+      }
+    }
+
+    console.log(arN, arO);
+    //TODO: เลขที่แยกออกมาแล้วทำให้เป็น  Number และ กระทำกับตัวดำเนินการ
+    const arNparse = arN.map((str) => parseFloat(str));
+
+    let sum = arNparse[0];
+    for (let i = 1; i < arNparse.length; i++) {
+      sum = operationExc(sum, arNparse[i], arO[i - 1]);
+    }
+
+    console.log(sum);
+    //TODO: คืนผลลัพท์สุดท้ายเป๋น string
+    setDisplay(sum.toString());
+  };
+
   useEffect(() => {
-    if (display.length > 1 && display[0] === '0') {
+    if (display.length > 1 && display[0] === '0' && display[1] !== '.') {
       setDisplay(display.slice(1));
     }
     return;
@@ -48,8 +90,7 @@ function App() {
         <div
           id="subtract"
           onClick={() => {
-            if (operation.indexOf(display[display.length - 1]) === -1)
-              setDisplay(display + '-');
+            setDisplay(display + '-');
           }}
         >
           -
@@ -89,13 +130,39 @@ function App() {
         >
           0
         </div>
-        <div id="decimal" onClick={() => setDisplay(display + '.')}>
+        <div
+          id="decimal"
+          onClick={() => {
+            setDisplay(display + '.');
+          }}
+        >
           .
         </div>
-        <div id="equals">=</div>
+        <div id="equals" onClick={handlerCalculated}>
+          =
+        </div>
       </div>
     </div>
   );
 }
 
 export default App;
+
+const operationExc = (a, b, op) => {
+  switch (op) {
+    case '+':
+      return a + b;
+    case '-':
+      return a - b;
+    case 'x':
+      return a * b;
+    case '/':
+      if (a === 0 || b === 0) {
+        return 'Number to divide must Not Zero';
+      } else {
+        return a / b;
+      }
+    default:
+      throw new Error("can't calculated just fix your code!!");
+  }
+};
